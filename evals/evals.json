@@ -1,0 +1,53 @@
+{
+  "skill_name": "plugin-best-practices",
+  "evals": [
+    {
+      "id": 0,
+      "name": "subscribe-rewrite",
+      "prompt": "帮我写个新插件，跨客户端用，放在 plugins/Generic/。功能：每次订阅更新时，把每个节点名里开头的 emoji / 国旗去掉，并统一加一个前缀，前缀默认「我的-」，要能在插件设置里自定义。插件也要加进对应的目录（catalog），元数据写全一点。",
+      "expected_output": "一个 plugins/Generic/ 下的 ESM 插件（onSubscribe 返回改写后的 proxies），带 configuration 前缀项（默认「我的-」），以及 generic.json 中新增的 catalog 条目（triggers 含 on::subscribe，type/url/path/version 齐全）。",
+      "expectations": [
+        "插件使用 ESM 默认导出入口 `export default (Plugin) => {...}` 返回处理器对象，而不是顶层 `const onRun = ...` 旧式写法",
+        "实现了 `onSubscribe`，接收 `(proxies, subscription)` 并返回改写后的 proxies 数组",
+        "节点名改写逻辑会去掉 emoji/国旗（例如用正则匹配 emoji 或国旗区段）",
+        "节点名会加上可配置前缀，默认值为「我的-」",
+        "前缀通过 catalog 的 `configuration` 暴露（`component` 为 `Input`），插件内用 `Plugin.<key>` 读取并提供默认值",
+        "新增 catalog 条目的 `triggers` 含 `on::subscribe`，`id` 与文件名一致，且包含 `type`/`url`/`path`/`version` 字段",
+        "未使用 Node.js 内置模块（require/fs/path/process/Buffer 等），所有 I/O 走 `Plugins.*`",
+        "新插件版本号为 `v1.0.0`"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "modal-ui",
+      "prompt": "写个插件，运行后弹出一个窗口，里面用标签页分两页：第一页列出当前所有「配置文件」，第二页列出所有「订阅」并显示名称和节点数量。界面尽量用软件自带的组件，不要手写一堆原生 HTML 和自定义 CSS。",
+      "expected_output": "一个用 Plugins.modal + Vue.defineComponent 字符串模板构建的插件，使用 Tabs/Card/Table/Empty 等原生组件，从 useProfilesStore / useSubscribesStore 读取数据，只用宿主工具类样式。",
+      "expectations": [
+        "使用 `Plugins.modal(...)` 创建窗口并调用 `.open()` 打开",
+        "界面用 `Vue.defineComponent({ template, setup })` 字符串模板实现（非 .vue SFC）",
+        "使用宿主的 `Tabs` 组件做标签页，`items` 用 `{ key, tab }` 字段（而非 `title`）并设置 `activeKey`",
+        "使用宿主原生组件（Card/Table/Empty/Button 等）而不是大量手写原生 HTML",
+        "从宿主 store 读取数据（`Plugins.useProfilesStore()` / `Plugins.useSubscribesStore()`）",
+        "只使用宿主允许的工具类，未出现 `hover:` 等变体前缀、任意像素值（如 `w-[137px]`）、`opacity-*` / `animate-*` / `size-*`",
+        "modal 实例与组件定义在插件入口闭包内，没有放到模块顶层长期持有",
+        "第二页确实显示订阅名称与节点数量"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "process-manager",
+      "prompt": "我想做个插件来管理一个本地小程序：安装时从网上下载它的压缩包并解压到 data 目录，顺便放一个自己的配置文件；右键菜单里能启动和停止它（启动参数用 -c menu-config.yaml）；卸载时把下载和解压出来的东西都清理掉。程序文件放到 data 下的第三方目录。",
+      "expected_output": "插件使用 ESM 入口，onInstall 下载/解压、onUninstall 清理、onDispose 结束进程，menus 暴露启动/停止并返回状态码 1/2，路径走 data/third/<id>。",
+      "expectations": [
+        "插件使用 ESM 默认导出入口返回处理器对象",
+        "`onInstall` 通过 `Plugins.*`（如 Download/Unzip*）把程序下载并解压到 `data/third/<id>` 或等价第三方目录",
+        "实现了 `onUninstall` 清理下载/解压产生的文件",
+        "实现了 `onDispose` 释放运行中的进程或资源",
+        "`menus` 暴露启动与停止，启动返回状态码 1、停止返回 2",
+        "启动使用 `ExecBackground`，参数包含 `-c menu-config.yaml`，路径经 `Plugins.AbsolutePath` 解析",
+        "未使用 Node.js 内置模块，所有系统操作走 `Plugins.*`",
+        "catalog 条目包含 `menus` 映射且 `triggers` 设置合理"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "id": "plugin-node-name-prefix",
+  "name": "统一节点名前缀",
+  "version": "v1.0.0",
+  "group": "Extensions",
+  "description": "订阅更新时自动去掉每个节点名称开头的 Emoji / 国旗，并统一加上自定义前缀（默认「我的-」）。同时兼容 GUI.for.Clash 与 GUI.for.SingBox。",
+  "tags": ["节点处理", "提升体验"],
+  "type": "Http",
+  "url": "https://raw.githubusercontent.com/GUI-for-Cores/Plugin-Hub/main/plugins/Generic/plugin-node-name-prefix.js",
+  "path": "data/plugins/plugin-node-name-prefix.js",
+  "triggers": ["on::subscribe"],
+  "hasUI": false,
+  "menus": {},
+  "context": {
+    "profiles": {},
+    "subscriptions": {},
+    "rulesets": {},
+    "plugins": {},
+    "scheduledtasks": {}
+  },
+  "status": 0,
+  "configuration": [
+    {
+      "id": "ID_node_name_prefix_strip",
+      "title": "去除开头 Emoji / 国旗",
+      "description": "开启后，自动去掉节点名称开头的 Emoji、国旗等符号。",
+      "key": "StripEmoji",
+      "component": "Switch",
+      "value": true,
+      "options": []
+    },
+    {
+      "id": "ID_node_name_prefix_trim",
+      "title": "清理残留分隔符",
+      "description": "去除 Emoji 后，是否一并清理紧随其后的空格、-、_、|、·、• 等分隔符。",
+      "key": "TrimSeparators",
+      "component": "Switch",
+      "value": true,
+      "options": []
+    },
+    {
+      "id": "ID_node_name_prefix_add",
+      "title": "统一添加前缀",
+      "description": "开启后，给每个节点名称加上下面配置的前缀（已带该前缀的节点不会重复添加）。",
+      "key": "AddPrefix",
+      "component": "Switch",
+      "value": true,
+      "options": []
+    },
+    {
+      "id": "ID_node_name_prefix_text",
+      "title": "节点名前缀",
+      "description": "统一添加到节点名称前的前缀，默认为「我的-」。留空则不添加前缀。",
+      "key": "Prefix",
+      "component": "Input",
+      "value": "我的-",
+      "options": []
+    }
+  ],
+  "disabled": false,
+  "install": false,
+  "installed": false
+}

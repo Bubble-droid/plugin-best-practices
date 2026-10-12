@@ -1,0 +1,10 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+
+# Node (the companion scripts have no dependencies, but keep installs out of the repo)
+node_modules/
+
+# Local-only output of the companion scripts
+.host-refs/
+.client-data/

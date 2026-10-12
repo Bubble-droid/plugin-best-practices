@@ -1,0 +1,50 @@
+{
+  "expectations": [
+    {
+      "text": "插件使用 ESM 默认导出入口 `export default (Plugin) => {...}` 返回处理器对象，而不是顶层旧式写法",
+      "passed": true,
+      "evidence": "ESM default-export entry"
+    },
+    {
+      "text": "实现了 `onSubscribe`，接收 `(proxies, subscription)` 并返回改写后的 proxies 数组",
+      "passed": true,
+      "evidence": "onSubscribe=True; returns proxies/map=True"
+    },
+    {
+      "text": "节点名改写逻辑会去掉 emoji/国旗（用正则匹配 emoji / 国旗区段）",
+      "passed": true,
+      "evidence": "emoji/flag regex present"
+    },
+    {
+      "text": "节点名默认前缀为「我的-」",
+      "passed": true,
+      "evidence": "default prefix present"
+    },
+    {
+      "text": "前缀通过 catalog 的 `configuration` 暴露（`component` 为 `Input`），插件内用 `Plugin.<key>` 读取并带默认值",
+      "passed": true,
+      "evidence": "configuration Input=True; reads Plugin=True"
+    },
+    {
+      "text": "catalog 条目 `triggers` 含 `on::subscribe`，id 与文件名一致，含 type/url/path/version",
+      "passed": true,
+      "evidence": "id=plugin-node-name-prefix; triggers=['on::subscribe']; has type/url/path/version=True"
+    },
+    {
+      "text": "未使用 Node.js 内置模块，所有 I/O 走 `Plugins.*`",
+      "passed": true,
+      "evidence": "clean"
+    },
+    {
+      "text": "新插件版本号为 `v1.0.0`",
+      "passed": true,
+      "evidence": "version=v1.0.0"
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "pass_rate": 1.0
+  }
+}

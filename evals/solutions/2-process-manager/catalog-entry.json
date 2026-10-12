@@ -1,0 +1,75 @@
+{
+  "id": "plugin-local-app-manager",
+  "name": "本地小程序管理器",
+  "version": "v1.0.0",
+  "group": "Tools",
+  "description": "管理一个本地小程序：安装时从网上下载程序压缩包并解压到 data/third，写入默认配置文件 menu-config.yaml；右键菜单可启动 / 停止程序（启动参数 -c menu-config.yaml）；卸载时清理程序与临时文件。",
+  "tags": [
+    "实用工具"
+  ],
+  "type": "Http",
+  "url": "https://raw.githubusercontent.com/GUI-for-Cores/Plugin-Hub/main/plugins/Generic/plugin-local-app-manager.js",
+  "path": "data/plugins/plugin-local-app-manager.js",
+  "triggers": [
+    "on::manual",
+    "on::startup",
+    "on::shutdown"
+  ],
+  "hasUI": false,
+  "menus": {
+    "启动程序": "Start",
+    "停止程序": "Stop",
+    "重新安装程序": "Reinstall",
+    "配置文件": "Config",
+    "打开目录": "OpenDir"
+  },
+  "context": {
+    "profiles": {},
+    "subscriptions": {},
+    "rulesets": {},
+    "plugins": {},
+    "scheduledtasks": {}
+  },
+  "status": 0,
+  "configuration": [
+    {
+      "id": "ID_localapp_download_url",
+      "title": "程序压缩包下载地址",
+      "description": "程序发布压缩包的直链，支持 .zip 与 .tar.gz；不同程序的地址不同，请填写你自己这一个。",
+      "key": "DownloadUrl",
+      "component": "Input",
+      "value": "",
+      "options": []
+    },
+    {
+      "id": "ID_localapp_executable_name",
+      "title": "可执行文件名",
+      "description": "压缩包解压后主程序的文件名，例如 local-app.exe 或 local-app；留空则按系统使用 local-app / local-app.exe。",
+      "key": "ExecutableName",
+      "component": "Input",
+      "value": "",
+      "options": []
+    },
+    {
+      "id": "ID_localapp_config_content",
+      "title": "默认配置文件内容",
+      "description": "安装时写入 menu-config.yaml 的内容；该文件已存在时不会覆盖。",
+      "key": "ConfigContent",
+      "component": "CodeEditor",
+      "value": "# 本地小程序配置文件\nlog:\n  level: info\nlisten: 127.0.0.1:8080",
+      "options": []
+    },
+    {
+      "id": "ID_localapp_auto_start_or_stop",
+      "title": "跟随 GUI 启动或停止",
+      "description": "启用后，本地小程序会随 GUI 一起启动和停止。",
+      "key": "AutoStartOrStop",
+      "component": "Switch",
+      "value": false,
+      "options": []
+    }
+  ],
+  "disabled": false,
+  "install": true,
+  "installed": false
+}

@@ -1,0 +1,26 @@
+{
+  "id": "plugin-profiles-and-subscriptions",
+  "name": "配置文件与订阅总览",
+  "version": "v1.0.0",
+  "group": "Tools",
+  "description": "运行后弹出窗口，用标签页分别列出当前所有配置文件，以及所有订阅及其节点数量。",
+  "tags": ["实用工具"],
+  "type": "Http",
+  "url": "https://raw.githubusercontent.com/GUI-for-Cores/Plugin-Hub/main/plugins/Generic/plugin-profiles-and-subscriptions.js",
+  "path": "data/plugins/plugin-profiles-and-subscriptions.js",
+  "triggers": ["on::manual"],
+  "hasUI": true,
+  "menus": {},
+  "context": {
+    "profiles": {},
+    "subscriptions": {},
+    "rulesets": {},
+    "plugins": {},
+    "scheduledtasks": {}
+  },
+  "status": 0,
+  "configuration": [],
+  "disabled": false,
+  "install": false,
+  "installed": false
+}

@@ -1,0 +1,50 @@
+{
+  "expectations": [
+    {
+      "text": "使用 `Plugins.modal(...)` 创建窗口并调用 `.open()`",
+      "passed": true,
+      "evidence": "Plugins.modal=True; .open()=True"
+    },
+    {
+      "text": "界面用 `Vue.defineComponent({ template, setup })` 字符串模板实现（非 .vue SFC）",
+      "passed": true,
+      "evidence": "defineComponent=True; template=True; setup=True"
+    },
+    {
+      "text": "使用宿主 `Tabs`，`items` 用 `{ key, tab }` 字段（而非 `title`）并设置 activeKey",
+      "passed": true,
+      "evidence": "Tabs=True; tab:=True; activeKey=True"
+    },
+    {
+      "text": "使用宿主原生组件（Card/Table/Empty/Button 等）而不是大量手写原生 HTML",
+      "passed": true,
+      "evidence": "host components: Tabs, Table, Empty, Tag"
+    },
+    {
+      "text": "从宿主 store 读取数据（useProfilesStore / useSubscribesStore）",
+      "passed": true,
+      "evidence": "profiles=True; subscribes=True"
+    },
+    {
+      "text": "未使用 `hover:` 等变体前缀、任意像素值、opacity-*/animate-*/size-*",
+      "passed": true,
+      "evidence": "forbidden tokens: none"
+    },
+    {
+      "text": "modal 实例与组件定义在插件入口闭包内，没有放到模块顶层",
+      "passed": true,
+      "evidence": "no module-level modal declaration"
+    },
+    {
+      "text": "第二页显示订阅名称与节点数量",
+      "passed": true,
+      "evidence": "length=True; subscribe-label=True"
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "pass_rate": 1.0
+  }
+}

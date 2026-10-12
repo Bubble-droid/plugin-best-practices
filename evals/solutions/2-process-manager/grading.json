@@ -1,0 +1,50 @@
+{
+  "expectations": [
+    {
+      "text": "插件使用 ESM 默认导出入口返回处理器对象",
+      "passed": true,
+      "evidence": "ESM default-export entry"
+    },
+    {
+      "text": "`onInstall` 下载并解压到 data 第三方目录（data/third/<id>）",
+      "passed": true,
+      "evidence": "onInstall=True; Download=True; Unzip=True; data/third=True"
+    },
+    {
+      "text": "实现了 `onUninstall` 清理下载/解压产生的文件",
+      "passed": true,
+      "evidence": "onUninstall=True; Remove*=True"
+    },
+    {
+      "text": "实现了 `onDispose` 释放运行中的进程或资源",
+      "passed": true,
+      "evidence": "onDispose=True"
+    },
+    {
+      "text": "`menus` 暴露启动与停止，启动返回 1、停止返回 2",
+      "passed": true,
+      "evidence": "menus=['Start', 'Stop', 'Reinstall', 'Config', 'OpenDir']; return1=True; return2=True"
+    },
+    {
+      "text": "启动用 `ExecBackground`，参数含 `-c menu-config.yaml`，路径经 `AbsolutePath` 解析",
+      "passed": true,
+      "evidence": "ExecBackground=True; -c=True; menu-config=True; AbsolutePath=True"
+    },
+    {
+      "text": "未使用 Node.js 内置模块",
+      "passed": true,
+      "evidence": "clean"
+    },
+    {
+      "text": "catalog 条目包含 `menus` 映射且 `triggers` 设置合理",
+      "passed": true,
+      "evidence": "menus=True; triggers=['on::manual', 'on::startup', 'on::shutdown']"
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "pass_rate": 1.0
+  }
+}

@@ -22,7 +22,8 @@ variable is the escape hatch — do not add global stylesheets.
 `mt-8`, `px-12`, `p-16`, `mb-auto`, `mx-auto`, `ml-auto`, `pb-4`. Margins also support `-auto`.
 
 **Sizes** — `w-*` / `h-*` / `min-w-*` / `min-h-*` for `{0,8,10,12,16,18,24,26,30,32,38,40,42,64,128,256}`,
-percentages `w-[25%]` (25/36/50/60/75/90/100), and `w-full` / `h-full`.
+percentage sizes `w-[25%]` / `h-[25%]` / `min-w-[25%]` / `min-h-[25%]` / `max-w-[25%]` / `max-h-[25%]`
+(25/36/50/60/75/90/100), and `w-full` / `h-full`.
 
 **Text** — sizes `text-{10,12,14,16,18,20,22,24,32}`; alignment `text-left|center|right`,
 `align-middle`; `line-clamp-1`, `line-clamp-2`; `underline`, `italic`, `font-bold`, `font-normal`;
@@ -41,9 +42,9 @@ percentages `w-[25%]` (25/36/50/60/75/90/100), and `w-full` / `h-full`.
 `backdrop-blur-sm`, `blur-3xl`, `overflow-auto|overflow-y-auto|overflow-x-auto|overflow-hidden`,
 `pointer-events-none`, `cursor-move`, `cursor-not-allowed`.
 
-There are **no** arbitrary values (`w-[137px]`, `text-[#abc]`), **no** variant prefixes (`hover:`,
-`focus:`, `dark:`), and **no** `opacity-*`, `animate-*`, or `size-*` classes. Use `w-* h-*` instead of
-`size-*`.
+There are **no** arbitrary pixel/color values (`w-[137px]`, `text-[#abc]` do not exist — the only bracket
+classes are the percentage sizes above), **no** variant prefixes (`hover:`, `focus:`, `dark:`), and
+**no** `opacity-*`, `animate-*`, or `size-*` classes. Use `w-* h-*` instead of `size-*`.
 
 > Gotcha: `.cursor-pointer` is defined as `cursor: default` and only becomes a real pointer when the
 > app's "use pointer" debug feature is on. Don't rely on it for a hand cursor — use a host component

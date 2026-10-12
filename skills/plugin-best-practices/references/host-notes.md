@@ -66,6 +66,9 @@ Write plugin-generated data under `data/third/<id>/` and remove it in `onUninsta
 | `data/user.yaml` | User preferences. |
 | `data/third/<id>/` | Where a plugin bundles third-party tools and shared modules. |
 
+The registry (`plugins.yaml`) and the hub index (`plugin-list.json`) hold the same record shape;
+`references/catalog.md` documents their fields and the catalog sources.
+
 These are relative to the client's install directory (where the executable lives); use
 `Plugins.AbsolutePath('data/...')` to turn one into an absolute path before passing it to `Exec` /
 `ExecBackground`.
@@ -76,6 +79,18 @@ Adding a plugin through the client UI writes the registry entry, stores the scri
 `data/plugins/`, and calls `onInstall`. From then on, editing the *stored* script and reloading the
 plugin is the fast loop. `scripts/link-host-data.mjs` connects a repository file to that stored script
 so edits in the repo are what the client runs.
+
+## Testing a trigger in the client
+
+The plugin editor's **test** control runs any handler on demand instead of waiting for its real event: it
+evaluates the code with the metadata proxy plus `Mode: 'Dev'` and calls the handler with mock arguments
+(`onSubscribe` gets `'[]'` / `'{}'`, `onGenerate` gets `'{}'` / `'{}'`, `onConfigure` gets the metadata).
+A handler can branch on `plugin.Mode === 'Dev'` to use throwaway data only while testing. The same editor
+saves through `WriteFile` + `reloadPlugin`, which is the fast edit loop.
+
+Two list markers come from the version/id, not the catalog: a version starting with `v0` (for example
+`v0.1.0`) is tagged **Dev** in the plugin list, and a `plugin-`-prefixed id that is no longer found in any
+configured hub source is treated as deprecated.
 
 ## Hot-reload UI development
 

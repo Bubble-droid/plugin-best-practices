@@ -129,17 +129,33 @@ default `/upload`, `MaxUploadSize` in bytes, default 50 MB), sets headers (`Stat
 
 ## System, window, tray, events
 
-- Environment: `GetEnv()` / `GetEnv(key)`, `GetInterfaces()`, `IsStartup()`.
+- Environment: `GetEnv()` / `GetEnv(key)`, `GetInterfaces()`, `IsStartup()`, `Environment()` (OS/arch
+  info), `Quit()`.
 - Proxy / DNS: `GetSystemProxy()`, `GetSystemProxyBypass()`, `SetSystemProxy(enable, server,
   proxyType?, bypass?, services?)`, `SetSystemDNS(servers, services?)`.
 - Clipboard: `ClipboardSetText(text)`, `ClipboardGetText()`.
 - App / window: `RestartApp()`, `ExitApp()`, `ShowMainWindow()`, `OpenURI(uri)`, `BrowserOpenURL(url)`,
-  `WindowReloadApp()`, `WindowHide()`, `WindowShow()`, `WindowSetAlwaysOnTop(v)`.
+  `WindowReloadApp()` (reload the webview), `WindowReload()`, `Hide()` / `Show()`,
+  `WindowHide()` / `WindowShow()`, `WindowSetAlwaysOnTop(v)`, `WindowSetTitle(title)`, `WindowCenter()`,
+  `WindowSetSize(w, h)` / `WindowGetSize()`, `WindowSetPosition(x, y)` / `WindowGetPosition()`,
+  `WindowMinimise()` / `WindowUnminimise()` / `WindowIsMinimised()`,
+  `WindowMaximise()` / `WindowUnmaximise()` / `WindowToggleMaximise()` / `WindowIsMaximised()`,
+  `WindowFullscreen()` / `WindowUnfullscreen()` / `WindowIsFullscreen()`, `WindowIsNormal()`,
+  `WindowSetMinSize(w, h)` / `WindowSetMaxSize(w, h)`, `WindowSetBackgroundColour(r, g, b, a)`,
+  `WindowSetSystemDefaultTheme()` / `WindowSetLightTheme()` / `WindowSetDarkTheme()`,
+  `ScreenGetAll()`, `OnFileDrop(cb, useDropTarget)` / `OnFileDropOff()`.
 - Tray: `UpdateTray({ tooltip?, icon?, title?, menus? })`, `UpdateTrayMenus(menus)`,
   `UpdateTrayAndMenus(tray, menus)`.
-- Events: `EventsOn(name, cb)` → unsubscribe, `EventsOnce`, `EventsOff`, `EventsEmit`, `EventsOffAll`.
+- Events: `EventsOn(name, cb)` → unsubscribe, `EventsOnMultiple(name, cb, max)`, `EventsOnce`,
+  `EventsOff`, `EventsEmit`, `EventsOffAll`.
+- Notifications: `SendNotification(options)`, `SendNotificationWithActions(options)`,
+  `IsNotificationAvailable()`, `RequestNotificationAuthorization()`, `CheckNotificationAuthorization()`,
+  `InitializeNotifications()` / `CleanupNotifications()`, and the `*Notification*` / `*NotificationCategory*`
+  removal helpers.
+- Logging: `LogPrint`, `LogTrace`, `LogDebug`, `LogInfo`, `LogWarning`, `LogError`, `LogFatal`.
 - Privileges: `CheckPermissions()`, `SwitchPermissions(enable)`, `GrantTUNPermission(path)`,
-  `RunWithOsaScript(cmd, args?, options?)`, `RunWithPowerShell(cmd, args?, options?)`.
+  `RunWithOsaScript(cmd, args?, options?)`, `RunWithPowerShell(cmd, args?, options?)`,
+  `PreserveCorePermissions(source, target)`.
 - Autostart: `IsAutoStartEnabled()`, `EnableAutoStart(delay?)`, `DisableAutoStart()`.
 
 ## MMDB
@@ -176,9 +192,11 @@ Each returns the live Pinia store. The most useful entry points:
 - Validation: `isValidIPv4`, `isValidIPv6`, `isValidIPCIDR`, `isValidJson`, `isValidSubYAML`,
   `isValidSubJson`, `isValidPaylodYAML`, `isValidRulesJson`, `isValidCron`, `isNumber`.
 - Matching: `createTextMatcher`, `buildSmartRegExp`.
-- Core / config: `generateConfig(profile, options?)`, `handleUseProxy`, `handleChangeMode`,
-  `addToRuleSet(id, payloads)`, `getKernelFileName`, `getKernelRuntimeArgs`, `getUserAgent`,
-  `getAppDts()`.
+- Core / config: `generateConfig(profile, options?)`, `generateConfigFile(...)`, `generateRule(...)`,
+  `generateProxies(groups)`, `generateProxyGroup(...)`, `generateProxyProviders(groups)`,
+  `restoreProfile(profile)`, `handleUseProxy`, `handleChangeMode`, `addToRuleSet(id, payloads)`,
+  `getKernelFileName`, `getKernelRuntimeArgs`, `getUserAgent`, `getAppDts()`.
+- Events / completion: `eventBus` (a typed pub/sub for host events), `getCompletions(pluginScope?)`.
 - Misc: `sampleID()`, `generateSecureKey(bits?)`, `ignoredError(fn, ...args)`, `reloadApp()`,
   `exitApp()`.
 - Constants: `Plugins.APP_TITLE`, `APP_VERSION`, `PROJECT_URL`, `TG_GROUP`, `TG_CHANNEL`, `isDev`.

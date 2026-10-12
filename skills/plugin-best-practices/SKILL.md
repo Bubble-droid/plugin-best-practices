@@ -28,6 +28,8 @@ summarizes:
 - `references/styling.md` — the exact utility classes and CSS variables.
 - `references/ui-patterns.md` — the layouts the host itself uses (settings rows, list/grid pages, modal
   forms, status feedback) to copy when composing a plugin UI.
+- `references/catalog.md` — the plugin record and the catalog/index model: every metadata field, its
+  enumerable values, configuration items, and the catalog sources.
 - `references/host-notes.md` — how the client loads plugins, resolves configuration, and where files live.
 
 Helper scripts (run with Node; they are repository tooling, not plugin code):
@@ -141,9 +143,9 @@ const configValue = (key, fallback = '') => {
 const apiUrl = configValue('ApiUrl', 'https://example.com')
 ```
 
-`configuration[].component` accepts `CheckBox`, `CodeEditor`, `ColorPicker`, `Input`, `InputList`,
-`KeyValueEditor`, `Radio`, `Select`, `MultipleSelect`, `Switch`.
-`plugins/Generic/plugin-configuration-example.js` and its catalog entry are a runnable reference.
+The available `component` values, the `options` `"label,value"` format, and the JavaScript type each
+component yields are in `references/catalog.md`; `plugins/Generic/plugin-configuration-example.js` and
+its catalog entry are a runnable reference for all of them.
 
 ## Catalog entry
 
@@ -153,14 +155,15 @@ before editing.
 
 Entry fields: `id` (kebab-case, matches the filename), `name`, `version` (`vx.y.z`), `group`,
 `description`, `tags`, `type` (`Http` | `File`), `url`, `path`, `triggers`, `hasUI`, `menus`,
-`context`, `status`, `configuration`.
+`context`, `status`, `configuration`. Every field, its enumerable values, and the catalog/index files and
+sources are documented in `references/catalog.md`.
 
 ```json
 {
   "id": "plugin-example-name",
   "name": "插件示例",
   "version": "v1.0.0",
-  "group": "Generic",
+  "group": "Extensions",
   "description": "做了什么",
   "tags": ["标签"],
   "type": "Http",
@@ -175,15 +178,14 @@ Entry fields: `id` (kebab-case, matches the filename), `name`, `version` (`vx.y.
 }
 ```
 
-- `url` is the exact raw GitHub URL of the plugin file; `path` is the app-side install path
-  (`data/plugins/<id>.js`).
-- `triggers` accepts only the values in `references/triggers.md`; install / uninstall / enable / disable /
-  dispose are automatic and are not listed.
-- `menus` maps a right-click label to an exported function name from the entry's returned object; each
-  `context.<kind>` map does the same for a resource kind's right-click menu and passes that resource to
-  the handler (see `references/plugin-system.md`).
+- `id` should start with `plugin-` for a plugin distributed through a catalog — that prefix is what marks
+  it as hub-managed when the client looks up updates.
 - Version policy: metadata change → major (`v1.4.2` → `v2.0.0`), new feature → minor
   (`v1.4.2` → `v1.5.0`), bug fix → patch (`v1.4.2` → `v1.4.3`); keep the catalog version in sync.
+
+Every other field — `type`, `url` / `path`, `group`, `status`, `triggers`, `hasUI`, `menus` / `context`,
+and `configuration` — is documented with its values in `references/catalog.md` (triggers also in
+`references/triggers.md`, menus in `references/plugin-system.md`).
 
 ## Building plugin UI
 
@@ -212,17 +214,14 @@ feedback) — start there.
 
 ### Host components
 
-Prefer the host's globally registered components over hand-written markup. The set includes `Button`,
-`Card`, `Input`, `Select`, `Switch`, `Tag`, `Table`, `Tabs`, `Pagination`, `Empty`, `Icon`, `CheckBox`,
-`Radio`, `InputList`, `CodeEditor`, `KeyValueEditor`, `Dropdown`, and `ResourceSelect` (a picker for
-profiles/subscriptions/rulesets/plugins/scheduledtasks); props, slots, the easy-to-get-wrong fields, and
-the full list are in `references/components.md`.
+Prefer the host's globally registered components over hand-written markup. Reference them by tag name in
+templates (`<Card>`, `<Button>`); in render calls use the Vue helpers
+(`Vue.h(Vue.resolveComponent('Button'), ...)`). Keep templates simple — avoid extra nesting and wrapper
+elements.
 
-Reference native components by tag name in templates (`<Card>`, `<Button>`); in render calls use the
-Vue helpers (`Vue.h(Vue.resolveComponent('Button'), ...)`). Keep templates simple — avoid extra nesting
-and wrapper elements. `Icon` only accepts names the host defines (`references/components.md` lists
-them; for example `search`, `copy`, `refresh`, `folder`, `loading`, `reset`, `empty`, `link`,
-`settings`, `telegram`, `arrowRight`, `messageInfo`); there is no `user` or `star` icon.
+The full component set, their props and slots, the easy-to-get-wrong fields, and the fixed `Icon` name
+list are in `references/components.md`. Do not invent a prop or an icon name: `Icon` in particular only
+accepts the host's names (there is no `user` or `star` icon).
 
 ### Styling
 

@@ -43,7 +43,9 @@ listing `on::install` / `on::uninstall` (or similar) has no effect.
 | `onConfigure` | `(config, old) => ...` | when the configuration form is saved |
 | `onTask` | `() => ...` | when a scheduled task that references the plugin runs |
 
-`onRun` is also reached from the plugin card's run button and from `menus` / `context` actions.
+`onRun` is also reached from the plugin card's run button and from `menus` / `context` actions. A
+scheduled task that **runs** the plugin calls `onTask`, not `onRun`, so keep the task entry point in
+`onTask` (or have it delegate to `onRun`).
 
 ## Pipeline handlers
 

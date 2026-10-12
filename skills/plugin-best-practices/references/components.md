@@ -28,25 +28,25 @@ In render code resolve them through Vue instead: `Vue.h(Vue.resolveComponent('Bu
 
 | Component | Key props | Notes |
 | --- | --- | --- |
-| `Button` | `type: 'primary' \| 'normal' \| 'link' \| 'text'`, `size: 'default' \| 'small' \| 'large'`, `icon`, `iconSize`, `iconColor`, `loading`, `disabled` | `icon` is an icon name (see below). |
-| `Card` | `title`, `subtitle`, `selected`, `disabled` | Default slot is the body; a `#title` extra slot exists. |
-| `Input` | `v-model`, `type: 'text' \| 'number' \| 'code'`, `placeholder`, `size`, `clearable`, `autoSize`, `allowPaste`, `autofocus`, `min`, `max`, `disabled`, `border` | Emits `change`, `update:modelValue`, `submit`; `#prefix` / `#suffix` slots. |
+| `Button` | `type: 'primary' \| 'normal' \| 'link' \| 'text'`, `size: 'default' \| 'small' \| 'large'`, `icon`, `iconSize`, `iconColor`, `loading`, `disabled`, `role` | `icon` is an icon name (see below); `role` defaults to `'button'`. |
+| `Card` | `title`, `subtitle`, `selected`, `disabled` | Body is the default slot; header slots are `#title-prefix`, `#title-suffix`, and `#extra` (right-aligned actions). |
+| `Input` | `v-model` (`string \| number`), `type: 'text' \| 'number' \| 'code'`, `lang: 'yaml' \| 'json' \| 'javascript' \| 'css'`, `placeholder`, `size`, `editable`, `clearable`, `autoSize`, `allowPaste`, `autofocus`, `min`, `max`, `maxWidth`, `delay`, `disabled`, `border` | Emits `change`, `update:modelValue`, `submit`; `#prefix` / `#suffix` / `#editable` slots. |
 | `InputList` | `v-model` (`string[]`), `placeholder`, `autofocus` | A list of single-line inputs. |
-| `Select` | `v-model` (`string \| string[]`), `options: { label, value }[]`, `multiple`, `border`, `size`, `placeholder`, `clearable`, `autoSize` | Use `multiple` for multi-select. |
+| `Select` | `v-model` (`string \| string[]`), `options: { label, value }[]`, `multiple`, `border`, `size`, `placeholder`, `clearable`, `autoSize` | Use `multiple` for multi-select; `#empty` slot replaces the list when `options` is empty. |
 | `CheckBox` | `v-model` (`string[]`), `options: { label, value }[]`, `size` | Multi-select. |
 | `Radio` | `v-model`, `options: { label, value }[]`, `size` | Emits `change`. |
 | `Switch` | `v-model`, `size`, `border: 'default' \| 'square'`, `label`, `disabled` | Default slot is an inline label. |
 | `Tag` | `color: 'cyan' \| 'green' \| 'red' \| 'default' \| 'primary' \| 'orange' \| 'gold' \| 'blue' \| 'purple'`, `size`, `closeable`, `bordered` | Emits `close`. |
 | `Icon` | `icon` (required), `size`, `color` | Names are fixed — see the list below. |
 | `Table` | `columns: Column[]` (`{ title, key, align?, hidden?, minWidth?, sort?, customRender? }`), `dataSource: Record<string, any>[]`, `sort`, `menu` | No `width` on a column — use `minWidth`. Rows are keyed by `id`, so give each record one. `customRender` formats a cell. |
-| `Tabs` | `activeKey` (required), `items: { key, tab, component? }[]`, `tabPosition: 'left' \| 'top'`, `tabWidth`, `contentWidth` | Emits `update:activeKey`. A tab body is either `component` (kept alive / cached) or a slot named after the tab's `key` (re-rendered each switch). |
+| `Tabs` | `activeKey` (required), `items: { key, tab, component? }[]`, `tabPosition: 'left' \| 'top'`, `tabWidth`, `contentWidth` | Emits `update:activeKey`; `#extra` slot adds content to the tab bar. A tab body is either `component` (kept alive / cached) or a slot named after the tab's `key` (re-rendered each switch). |
 | `CodeEditor` | `v-model`, `editable`, `lang: 'json' \| 'javascript' \| 'yaml' \| 'css'`, `mode: 'editor' \| 'diff'`, `placeholder`, `plugin` | |
 | `CodeViewer` | `v-model`, `lang`, `copyable` | Read-only viewer. |
 | `KeyValueEditor` | `v-model` (`object`), `placeholder: [string, string]` | |
 | `Dropdown` | `trigger: ('click' \| 'hover')[]`, `placement: 'bottom' \| 'top'`, `delay` | Overlay items go in the `#overlay` slot. |
 | `ResourceSelect` | `type: 'profile' \| 'subscription' \| 'ruleset' \| 'plugin' \| 'scheduledtask'`, `title`, `cols`, `min`, `max`, `renderSlot`, `openImmediate` | `v-model` is `string[]`; emits `change` / `submit`. Picks from host resources. |
 | `Empty` | `icon`, `iconSize`, `description` | |
-| `Pagination` | `total` (required), `size`, `pageSize` | |
+| `Pagination` | `total` (required), `size`, `pageSize`, `v-model:current` | `pageSize` defaults to 9. |
 | `Progress` | `percent`, `status: 'primary' \| 'warning' \| 'danger'`, `type: 'circle' \| 'line'`, `radius` | |
 | `Divider` | — | |
 | `ScrollView` | — | |

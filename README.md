@@ -25,6 +25,7 @@ all of that — verified against the real host source — into a form an agent c
 | Area | Reference |
 | --- | --- |
 | Triggers, handlers, signatures, pipeline rules, status codes | [`references/triggers.md`](skills/plugin-best-practices/references/triggers.md) |
+| Plugin metadata, configuration items, catalog entries, and the index files and sources | [`references/catalog.md`](skills/plugin-best-practices/references/catalog.md) |
 | Lifecycle, menus and context actions, live-API probing | [`references/plugin-system.md`](skills/plugin-best-practices/references/plugin-system.md) |
 | The full `Plugins` surface (dialogs, files, network, processes, stores) | [`references/plugin-api.md`](skills/plugin-best-practices/references/plugin-api.md) |
 | Host Vue components, props, and the icon set | [`references/components.md`](skills/plugin-best-practices/references/components.md) |

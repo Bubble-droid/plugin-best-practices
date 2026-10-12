@@ -48,6 +48,11 @@ same kind of label under a resource kind (`profiles`, `subscriptions`, `rulesets
 `scheduledtasks`); those handlers receive the clicked resource as their argument. Both can return a
 status code, which is why they are the natural home for start/stop controls.
 
+Menu actions appear in the plugin card's own context menu, and `onRun` is always reachable from the run
+button. Both also surface in the **tray menu** and the command palette, but only when the user enables
+**Add plugin to tray menu** in settings (`app.addPluginToMenu`, off by default) — do not rely on the tray
+as the only way to reach a menu action.
+
 ```js
 export default (plugin) => {
   const Start = async () => {
